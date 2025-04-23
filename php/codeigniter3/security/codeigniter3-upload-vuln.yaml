@@ -66,6 +66,7 @@ rules:
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config["max_size"] = $ANYTHING
+    - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config['max_size'] = $ANYTHING
 
@@ -91,5 +92,6 @@ rules:
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config["detect_mime"] = true
+    - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config['detect_mime'] = true
