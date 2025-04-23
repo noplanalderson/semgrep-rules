@@ -33,6 +33,12 @@ rules:
           - pattern: $_REQUEST
           - pattern: $_COOKIE
           - pattern: $_SERVER
+          - pattern: $this->input->get(...)
+          - pattern: $this->input->post(...)
+          - pattern: $this->input->request(...)
+          - pattern: $this->input->cookie(...)
+          - pattern: $this->input->server(...)
+          - pattern: $this->input->get_post(...)
   pattern-sinks:
     - patterns:
       - pattern: $SQL
@@ -41,4 +47,4 @@ rules:
           - pattern-inside: $SQL = "...".$VAR."...";
           - pattern-inside: $this->db->query($SQL)
           - pattern-inside: $this->db->query("...".$_POST['...']."...")
-          
+
