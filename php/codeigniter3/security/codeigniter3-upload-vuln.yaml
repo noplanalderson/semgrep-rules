@@ -77,6 +77,10 @@ rules:
     impact: MEDIUM
     confidence: MEDIUM
   patterns:
-    - pattern-either:
-        - pattern: $config["mime_check"] = false;
-        - pattern-not-inside: $config["mime_check"] = true;
+    - pattern-inside: |
+        function $FUNC(...) {
+            ...
+        }
+    - pattern: $this->upload->do_upload(...)
+    - pattern-not-inside: |
+        $config["detect_mime"] = true
