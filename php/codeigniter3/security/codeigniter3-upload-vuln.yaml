@@ -1,3 +1,4 @@
+rule:
 - id: file-upload-without-allowed-types
   languages: [php]
   severity: WARNING
