@@ -1,86 +1,66 @@
 rules:
-- id: file-upload-without-allowed-types
+- id: ci3-upload-missing-allowed-types
   languages: [php]
   severity: WARNING
-  message: >-
-    File upload detected without setting `allowed_types`. 
-    Anda sebaiknya membatasi tipe file yang diizinkan agar tidak semua file bisa diunggah (misal: jpg|png|pdf).
+  message: >
+    Fungsi upload file tidak mengatur `allowed_types`. Ini bisa menyebabkan file berbahaya diunggah.
   metadata:
-    category: security
     technology: [codeigniter3]
     cwe: ["CWE-434"]
     subcategory: [vuln]
-    likelihood: HIGH
-    impact: MEDIUM
-    confidence: MEDIUM
-  patterns:
-    - pattern-inside: |
-        function $FUNC(...) {
-            ...
-        }
-    - pattern: $this->upload->do_upload(...)
-    - pattern-not: |
-        $config["allowed_types"] = $ANYTHING;
-    - pattern-not: |
-        $config['allowed_types'] = $ANYTHING;
-- id: file-upload-allowed-types-any
+  pattern: |
+    function $FUNC(...) {
+      ...
+      $this->upload->do_upload(...);
+      ...
+    }
+  pattern-not-inside: |
+    function $FUNC(...) {
+      ...
+      $config["allowed_types"] = $VAL;
+      ...
+    }
+
+- id: ci3-upload-missing-max-size
   languages: [php]
   severity: WARNING
-  message: >-
-    allowed_types diset ke "*", membolehkan upload semua file — ini berisiko.
+  message: >
+    Fungsi upload file tidak mengatur `max_size`. File sangat besar bisa membebani server.
   metadata:
-    category: security
     technology: [codeigniter3]
     cwe: ["CWE-434"]
     subcategory: [vuln]
-    likelihood: HIGH
-    impact: MEDIUM
-    confidence: MEDIUM
-  pattern-either:
-    - pattern: $config["allowed_types"] = "*";
-    - pattern: $config['allowed_types'] = "*";
-- id: file-upload-without-max-size
+  pattern: |
+    function $FUNC(...) {
+      ...
+      $this->upload->do_upload(...);
+      ...
+    }
+  pattern-not-inside: |
+    function $FUNC(...) {
+      ...
+      $config["max_size"] = $VAL;
+      ...
+    }
+
+- id: ci3-upload-missing-detect-mime
   languages: [php]
   severity: WARNING
-  message: >-
-    File upload tidak membatasi ukuran dengan `max_size`. Ini bisa menyebabkan DoS atau penggunaan storage berlebih.
+  message: >
+    Fungsi upload file tidak mengaktifkan `detect_mime`. File PHP berkamuflase bisa lolos upload.
   metadata:
-    category: security
-    technology: [codeigniter3]
-    cwe: ["CWE-434"]
-    likelihood: LOW
-    impact: MEDIUM
-    confidence: LOW
-  patterns:
-    - pattern-inside: |
-        function $FUNC(...) {
-            ...
-        }
-    - pattern: $this->upload->do_upload(...)
-    - pattern-not: |
-        $config["max_size"] = $ANYTHING;
-    - pattern-not: |
-        $config['max_size'] = $ANYTHING;
-- id: file-upload-without-mime-check
-  languages: [php]
-  severity: WARNING
-  message: >-
-    `detect_mime` tidak diaktifkan pada upload file. Ini membuat file palsu seperti .jpg berisi PHP bisa lolos.
-  metadata:
-    category: security
     technology: [codeigniter3]
     cwe: ["CWE-434"]
     subcategory: [vuln]
-    likelihood: HIGH
-    impact: MEDIUM
-    confidence: MEDIUM
-  patterns:
-    - pattern-inside: |
-        function $FUNC(...) {
-            ...
-        }
-    - pattern: $this->upload->do_upload(...)
-    - pattern-not: |
-        $config["detect_mime"] = true;
-    - pattern-not: |
-        $config['detect_mime'] = true;
+  pattern: |
+    function $FUNC(...) {
+      ...
+      $this->upload->do_upload(...);
+      ...
+    }
+  pattern-not-inside: |
+    function $FUNC(...) {
+      ...
+      $config["detect_mime"] = true;
+      ...
+    }
