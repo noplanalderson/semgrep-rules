@@ -35,11 +35,10 @@ rules:
           - pattern: $_SERVER
   pattern-sinks:
     - patterns:
-        - pattern-either:
-          - pattern: $query
-          - pattern-inside: $this->db->query($query)
-          - pattern-inside: $this->db->query("...$VAR...")
-          - pattern-inside: $this->db->query("SELECT ... WHERE ... ".$var)
-          - pattern-inside: $this->db->query("DELETE FROM ... WHERE ...".$input)
-          - pattern-inside: $this->db->query("UPDATE ... SET ... = '$data' WHERE ...")
-          - pattern-inside: $this->db->query("INSERT INTO ... VALUES ('$val', ...)")
+      - pattern: $SQL
+      - pattern-either:
+          - pattern-inside: $SQL = "...".$_POST['...']."...";
+          - pattern-inside: $SQL = "...".$VAR."...";
+          - pattern-inside: $this->db->query($SQL)
+          - pattern-inside: $this->db->query("...".$_POST['...']."...")
+          
