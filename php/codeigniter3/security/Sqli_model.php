@@ -15,8 +15,8 @@ class Sqli_model extends CI_Controller {
 
     // ruleid: codeigniter3-sql-injection
     public function vuln_insert() {
-        $query = "INSERT INTO users (name, email) VALUES ('" . $_POST['name'] . "', '" . $_POST['email'] . "')";
-        $query = $this->db->query($query);
+        $sql = "INSERT INTO users (name, email) VALUES ('" . $_POST['name'] . "', '" . $_POST['email'] . "')";
+        $this->db->query($sql);
     }
 
     // This code is safe
