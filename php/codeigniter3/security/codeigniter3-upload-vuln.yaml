@@ -23,7 +23,6 @@ rules:
     - pattern-not-inside: |
         $config["allowed_types"] = ...
 
-rules:
 - id: file-upload-allowed-types-any
   languages: [php]
   severity: WARNING
@@ -41,7 +40,6 @@ rules:
     confidence: MEDIUM
   pattern: $config["allowed_types"] = "*";
 
-rules:
 - id: file-upload-without-max-size
   languages: [php]
   severity: WARNING
@@ -64,7 +62,6 @@ rules:
     - pattern-not-inside: |
         $config["max_size"] = ...
 
-rules:
 - id: file-upload-without-mime-check
   languages: [php]
   severity: WARNING
