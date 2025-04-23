@@ -41,8 +41,9 @@ rules:
     impact: MEDIUM
     confidence: MEDIUM
   patterns: 
-    pattern: $config["allowed_types"] = "*";
-    pattern: $config['allowed_types'] = "*";
+    - pattern-either:
+        - pattern: $config["allowed_types"] = "*";
+        - pattern: $config['allowed_types'] = "*";
 
 - id: file-upload-without-max-size
   languages: [php]
