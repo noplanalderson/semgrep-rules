@@ -22,6 +22,7 @@ rules:
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config["allowed_types"] = $ANYTHING
+        $config['allowed_types'] = $ANYTHING
 
 - id: file-upload-allowed-types-any
   languages: [php]
@@ -39,6 +40,7 @@ rules:
     impact: MEDIUM
     confidence: MEDIUM
   pattern: $config["allowed_types"] = "*";
+  pattern: $config['allowed_types'] = "*";
 
 - id: file-upload-without-max-size
   languages: [php]
@@ -61,6 +63,7 @@ rules:
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config["max_size"] = $ANYTHING
+        $config['max_size'] = $ANYTHING
 
 - id: file-upload-without-mime-check
   languages: [php]
@@ -84,3 +87,4 @@ rules:
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
         $config["detect_mime"] = true
+        $config['detect_mime'] = true
