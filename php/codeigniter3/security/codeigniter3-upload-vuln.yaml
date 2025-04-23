@@ -21,7 +21,7 @@ rules:
         }
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
-        $config["allowed_types"] = ...
+        $config["allowed_types"] = $ANYTHING
 
 - id: file-upload-allowed-types-any
   languages: [php]
@@ -60,7 +60,7 @@ rules:
         }
     - pattern: $this->upload->do_upload(...)
     - pattern-not-inside: |
-        $config["max_size"] = ...
+        $config["max_size"] = $ANYTHING
 
 - id: file-upload-without-mime-check
   languages: [php]
