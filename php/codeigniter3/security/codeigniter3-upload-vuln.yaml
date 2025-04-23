@@ -1,4 +1,3 @@
-rules:
 - id: file-upload-without-allowed-types
   languages: [php]
   severity: WARNING
@@ -8,9 +7,8 @@ rules:
   metadata:
     category: security
     technology: [codeigniter3]
-    cwe: ["CWE-434: Unrestricted Upload of File with Dangerous Type"]
-    subcategory:
-    - vuln
+    cwe: ["CWE-434"]
+    subcategory: [vuln]
     likelihood: HIGH
     impact: MEDIUM
     confidence: MEDIUM
@@ -20,41 +18,35 @@ rules:
             ...
         }
     - pattern: $this->upload->do_upload(...)
-    - pattern-not-inside: |
-        $config["allowed_types"] = $ANYTHING
-    - pattern-not-inside: |
-        $config['allowed_types'] = $ANYTHING
-
+    - pattern-not: |
+        $config["allowed_types"] = $ANYTHING;
+    - pattern-not: |
+        $config['allowed_types'] = $ANYTHING;
 - id: file-upload-allowed-types-any
   languages: [php]
   severity: WARNING
   message: >-
-    File upload configuration `allowed_types` diset ke "*". 
-    Ini artinya semua tipe file diizinkan, yang sangat berisiko. Harap batasi hanya tipe file yang diperbolehkan.
+    allowed_types diset ke "*", membolehkan upload semua file — ini berisiko.
   metadata:
     category: security
     technology: [codeigniter3]
-    cwe: ["CWE-434: Unrestricted Upload of File with Dangerous Type"]
-    subcategory:
-    - vuln
+    cwe: ["CWE-434"]
+    subcategory: [vuln]
     likelihood: HIGH
     impact: MEDIUM
     confidence: MEDIUM
-  patterns: 
-    - pattern-either:
-        - pattern: $config["allowed_types"] = "*";
-        - pattern: $config['allowed_types'] = "*";
-
+  pattern-either:
+    - pattern: $config["allowed_types"] = "*";
+    - pattern: $config['allowed_types'] = "*";
 - id: file-upload-without-max-size
   languages: [php]
   severity: WARNING
   message: >-
-    Konfigurasi file upload tanpa `max_size`. 
-    Batasi ukuran file yang diunggah untuk menghemat sumber daya server.
+    File upload tidak membatasi ukuran dengan `max_size`. Ini bisa menyebabkan DoS atau penggunaan storage berlebih.
   metadata:
     category: security
     technology: [codeigniter3]
-    cwe: ["CWE-434: Unrestricted Upload"]
+    cwe: ["CWE-434"]
     likelihood: LOW
     impact: MEDIUM
     confidence: LOW
@@ -64,23 +56,20 @@ rules:
             ...
         }
     - pattern: $this->upload->do_upload(...)
-    - pattern-not-inside: |
-        $config["max_size"] = $ANYTHING
-    - pattern: $this->upload->do_upload(...)
-    - pattern-not-inside: |
-        $config['max_size'] = $ANYTHING
-
+    - pattern-not: |
+        $config["max_size"] = $ANYTHING;
+    - pattern-not: |
+        $config['max_size'] = $ANYTHING;
 - id: file-upload-without-mime-check
   languages: [php]
   severity: WARNING
   message: >-
-    `mime_check` tidak diaktifkan pada konfigurasi upload. Ini bisa menyebabkan file berekstensi .jpg namun berisi PHP tetap bisa lolos upload.
+    `detect_mime` tidak diaktifkan pada upload file. Ini membuat file palsu seperti .jpg berisi PHP bisa lolos.
   metadata:
     category: security
     technology: [codeigniter3]
-    cwe: ["CWE-434: Unrestricted Upload of File with Dangerous Type"]
-    subcategory:
-    - vuln
+    cwe: ["CWE-434"]
+    subcategory: [vuln]
     likelihood: HIGH
     impact: MEDIUM
     confidence: MEDIUM
@@ -90,8 +79,7 @@ rules:
             ...
         }
     - pattern: $this->upload->do_upload(...)
-    - pattern-not-inside: |
-        $config["detect_mime"] = true
-    - pattern: $this->upload->do_upload(...)
-    - pattern-not-inside: |
-        $config['detect_mime'] = true
+    - pattern-not: |
+        $config["detect_mime"] = true;
+    - pattern-not: |
+        $config['detect_mime'] = true;
